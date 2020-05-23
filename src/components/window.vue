@@ -1,22 +1,26 @@
 <template>
-    <div class="window" :style="position">
+    <div class="window" :style="position" tabindex="100">
         <div class="captionbar" 
             @pointerdown.self="mousedown" @pointermove.self="mousemove" @pointerup.self="mouseup"
-            @dblclick="maximized = !maximized">
-            <img class="sysicon" src="/winpics/shell32_3.ico" />
-            <div class="caption">Window</div>
+            @dblclick="togglemax">
+            <img class="sysicon" v-if="icon" :src="icon" />
+            <div class="caption">{{caption}}</div>
             <div class="spacer"></div>
             <div class="wndbtns">
-                <div class="btn">
+                <div class="btn" v-if="enable_min">
                     <svg width="7" height="9">
                         <line x1="0" y1="8" x2="5" y2="8" stroke="black"/>
                         <line x1="0" y1="9" x2="5" y2="9" stroke="black"/>
                     </svg>
                 </div>
-                <div class="btn" @click="maximized = !maximized">
-                    <svg width="9" height="9">
+                <div class="btn" v-if="enable_min" :disabled="!enable_size" @click="togglemax">
+                    <svg width="9" height="9" v-if="enable_size">
                         <line x1="0" y1="1" x2="8" y2="1" stroke="black"/>
                         <rect x="0" y="0" width="8" height="8" stroke="black" fill="transparent"/>
+                    </svg>
+                    <svg width="9" height="9" v-else>
+                        <line x1="0" y1="1" x2="8" y2="1" stroke="#808080"/>
+                        <rect x="0" y="0" width="8" height="8" stroke="#808080" fill="transparent"/>
                     </svg>
                 </div>
                 <div class="btn">
@@ -27,17 +31,46 @@
                 </div>
             </div>
         </div>
+        <div class="menubar"></div>
+        <div class="toolbar"></div>
+        <div class="clientarea">
+            <slot></slot>
+        </div>
+        <div class="statusbar"></div>
     </div>
 </template>
 
 <script>
 export default {
     name:'Window',
+    props:{
+        caption:{
+            type:String,
+            default:'Window',
+        },
+        icon:{
+            type:String,
+        },
+        enable_size:{
+            type:Boolean,
+            default:true,
+        },
+        enable_min:{
+            type:Boolean,
+            default:true,
+        },
+        initsize:{
+            type:Object,
+            default(){
+                return {x:20,y:20,w:500,h:400}
+            }
+        }
+    },
     data(){
         return {
             maximized:false,
 
-            winpos:{x:20,y:20,w:300,h:200},
+            winpos:this.initsize,
             dragging:false,
             dragging_pointer_id:0,
             pt_offset_x:0,
@@ -86,6 +119,11 @@ export default {
                 this.dragging = false;
                 this.dragging_pointer_id = 0;
             }
+        },
+        togglemax(){
+            if (this.enable_size) {
+                this.maximized = !this.maximized;
+            }
         }
     }
 }
@@ -93,13 +131,18 @@ export default {
 
 <style scoped>
     .window{position:absolute;}
-    .window{border:2px outset #d4d0c8;background-color:#d4d0c8;}
-    .captionbar{height:18px;display:flex;align-items:center;padding:0 2px 0 0;background:linear-gradient(to right,#0a2265,#a6caf0);}
+    .window{border:2px outset #f2f1ee;background-color:#d4d0c8;}
+    .window{display:flex;flex-flow:column nowrap;align-items:stretch;}
+    .window:focus-within{outline:none;}
+    .window:focus-within .captionbar{background:linear-gradient(to right,#0a2265,#a6caf0);}
+    .captionbar,.menubar,.toolbar,.statusbar{flex:none;}
+    .clientarea{flex:auto;}
+    .captionbar{height:18px;display:flex;align-items:center;padding:0 2px 0 0;background:linear-gradient(to right,#808080,#cac8c4);}
     .captionbar>*{margin-left:2px;}
     .sysicon{width:16px;height:16px;}
     .caption{flex:none;overflow:hidden;white-space:nowrap;color:white;}
     .spacer{flex:auto;}
     .wndbtns{flex:none;display:flex;}
     .btn{width:16px;height:14px;border:2px outset #d4d0c8;background-color:#d4d0c8;display:flex;align-items:center;justify-content:center;}
-    .btn:active{border-style:inset;}
+    .btn:not([disabled]):active{border-style:inset;}
 </style>

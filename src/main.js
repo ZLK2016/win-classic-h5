@@ -5,6 +5,14 @@ import store from './store'
 
 Vue.config.productionTip = false
 
+Vue.use({
+  install(V){
+    V.prototype.$res = (path)=>{
+      return `${process.env.BASE_URL}${path}`;
+    }
+  }
+})
+
 new Vue({
   router,
   store,

@@ -7,8 +7,8 @@
         </div>
         <ul class="quickstart"></ul>
         <ul class="runningapps">
-            <TaskbarBtn icon="/winpics/shell32_5.ico" :sizebycontent="false" maxsize="160px">New Folder</TaskbarBtn>
-            <TaskbarBtn icon="/winpics/shell32_5.ico" :sizebycontent="false" maxsize="160px">New Folder</TaskbarBtn>
+            <TaskbarBtn :icon="$res('winpics/shell32_5.ico')" :sizebycontent="false" maxsize="160px">New Folder</TaskbarBtn>
+            <TaskbarBtn :icon="$res('winpics/shell32_5.ico')" :sizebycontent="false" maxsize="160px">New Folder</TaskbarBtn>
         </ul>
         <ul class="traypanel">
             🔉<span>{{clock}}</span>
