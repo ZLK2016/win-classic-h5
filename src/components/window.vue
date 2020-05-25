@@ -13,7 +13,15 @@
                         <line x1="0" y1="9" x2="5" y2="9" stroke="black"/>
                     </svg>
                 </div>
-                <div class="btn" v-if="enable_min" :disabled="!enable_size" @click="togglemax">
+                <div class="btn" v-if="enable_min && maximized" :disabled="!enable_size" @click="togglemax">
+                    <svg width="9" height="9">
+                        <line x1="3" y1="1" x2="8" y2="1" stroke="black"/>
+                        <rect x="3" y="0" width="5" height="5" stroke="black" fill="transparent"/>
+                        <line x1="0" y1="4" x2="5" y2="4" stroke="black"/>
+                        <rect x="0" y="3" width="5" height="5" stroke="black" fill="transparent"/>
+                    </svg>
+                </div>
+                <div class="btn" v-if="enable_min && !maximized" :disabled="!enable_size" @click="togglemax">
                     <svg width="9" height="9" v-if="enable_size">
                         <line x1="0" y1="1" x2="8" y2="1" stroke="black"/>
                         <rect x="0" y="0" width="8" height="8" stroke="black" fill="transparent"/>
@@ -133,7 +141,7 @@ export default {
     .window{position:absolute;}
     .window{border:2px outset #f2f1ee;background-color:#d4d0c8;}
     .window{display:flex;flex-flow:column nowrap;align-items:stretch;}
-    .window:focus-within{outline:none;}
+    .window:focus-within{outline:none;z-index:1000;}
     .window:focus-within .captionbar{background:linear-gradient(to right,#0a2265,#a6caf0);}
     .captionbar,.menubar,.toolbar,.statusbar{flex:none;}
     .clientarea{flex:auto;}

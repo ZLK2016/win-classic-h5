@@ -4,6 +4,7 @@
         <Window v-for="w of windows" :key="'w_'+w.id"></Window>
         <Dialog><div>这里填写文本</div></Dialog>
         <AppRun></AppRun>
+        <AppIE></AppIE>
     </div>
 </template>
 <script>
@@ -11,6 +12,7 @@ import Shortcut from './shortcut.vue';
 import Window from './window.vue';
 import Dialog from './dialog.vue';
 import AppRun from './Apps/run.vue';
+import AppIE from './Apps/ie.vue';
 export default {
     name:'Desktop',
     components:{
@@ -18,6 +20,7 @@ export default {
         Window,
         Dialog,
         AppRun,
+        AppIE,
     },
     data(){
         return {

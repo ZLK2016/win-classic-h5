@@ -31,11 +31,11 @@ export default {
         },
         enable_size:{
             type:Boolean,
-            default:true,
+            default:false,
         },
         enable_min:{
             type:Boolean,
-            default:true,
+            default:false,
         },
         initsize:{
             type:Object,

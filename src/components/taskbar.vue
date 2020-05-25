@@ -2,7 +2,7 @@
     <div class="taskbar">
         <div class="start" ref="start">
             <div class="menu_outside" @click="start_menu_open = false" v-if="start_menu_open"></div>
-            <TaskbarBtn icon="/windows_xp.png" :down="start_menu_open" @mousedown.stop.native="start_menu_open = !start_menu_open">Start</TaskbarBtn>
+            <TaskbarBtn :icon="$res('windows_xp.png')" :down="start_menu_open" @mousedown.stop.native="start_menu_open = !start_menu_open">Start</TaskbarBtn>
             <StartMenu v-if="start_menu_open"></StartMenu>
         </div>
         <ul class="quickstart"></ul>
@@ -61,5 +61,5 @@ export default {
     .runningapps{flex:auto;display:flex;}
     .traypanel{border:1px inset ButtonFace;padding:1px;}
     .start{position:relative;}
-    .menu_outside{position:fixed;left:0;top:0;right:0;bottom:0;background-color:#fff5;}
+    .menu_outside{position:fixed;left:0;top:0;right:0;bottom:0;}
 </style>
