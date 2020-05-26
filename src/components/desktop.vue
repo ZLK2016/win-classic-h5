@@ -5,6 +5,7 @@
         <Dialog><div>这里填写文本</div></Dialog>
         <AppRun></AppRun>
         <AppIE></AppIE>
+        <AppNotepad></AppNotepad>
     </div>
 </template>
 <script>
@@ -13,6 +14,7 @@ import Window from './window.vue';
 import Dialog from './dialog.vue';
 import AppRun from './Apps/run.vue';
 import AppIE from './Apps/ie.vue';
+import AppNotepad from './Apps/notepad.vue';
 export default {
     name:'Desktop',
     components:{
@@ -21,6 +23,7 @@ export default {
         Dialog,
         AppRun,
         AppIE,
+        AppNotepad,
     },
     data(){
         return {

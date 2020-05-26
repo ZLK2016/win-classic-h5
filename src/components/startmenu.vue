@@ -24,7 +24,7 @@ export default {
                 {id:2, name:'-', icon:''},
                 {id:3, name:'Programs', icon:this.$res('winpics/shell32_20.ico'),children:[
                     {id:11, name:'Accessories', icon:this.$res('winpics/shell32_37.ico'), children:[
-                        {id:1, name:'Notepad', icon:''},
+                        {id:1, name:'Notepad', icon:this.$res('appicons/NOTEPAD_2.ico')},
                         {id:2, name:'Command Prompt', icon:''},
                     ]},
                     {id:12, name:'Startup', icon:this.$res('winpics/shell32_37.ico'), children:[

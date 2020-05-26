@@ -1,7 +1,11 @@
 <template>
-    <Window>
+    <Window caption="Internet Explorer" :icon="$res('iepics/IEXPLORE_32547.ico')">
         <div class="main">
-            <div class="addressbar">
+            <div class="menubar bar">
+                <MenuBar :border="true"></MenuBar>
+                <img src="">
+            </div>
+            <div class="addressbar bar">
                 <label>地址</label>
                 <input type="text" v-model="dispurl">
                 <Button @click.native="go">转到</Button>
@@ -17,10 +21,11 @@
 <script>
 import Window from '../window.vue';
 import Button from '../button.vue';
+import MenuBar from '../menubar.vue';
 export default {
     name: 'AppIE',
     components:{
-        Window, Button
+        Window, Button, MenuBar,
     },
     data(){
         return {
@@ -46,4 +51,8 @@ export default {
     .addressbar>input{flex:auto;}
     .webpage{flex:auto;}
     .webpage>iframe{width:100%;height:100%;}
+    .bar{border: 1px outset #e9e7e3;}
+    .menubar{display:flex;align-items:stretch;}
+    .menubar>div{flex:auto;}
+    .menubar>img{width:40px;background-color:white;}
 </style>
