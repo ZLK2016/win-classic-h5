@@ -1,8 +1,8 @@
 <template>
     <div class="desktop">
         <Shortcut v-for="s of shortcuts" :key="s.id" :icon="s.icon" :selected="selected==s" @click.native="selected=s">{{s.name}}</Shortcut>
-        <Window v-for="w of windows" :key="'w_'+w.id"></Window>
-        <Dialog><div>这里填写文本</div></Dialog>
+        <!-- <Window v-for="w of windows" :key="'w_'+w.id"></Window>
+        <Dialog><div>这里填写文本</div></Dialog> -->
         <AppRun></AppRun>
         <AppIE></AppIE>
         <AppNotepad></AppNotepad>
@@ -10,8 +10,8 @@
 </template>
 <script>
 import Shortcut from './shortcut.vue';
-import Window from './window.vue';
-import Dialog from './dialog.vue';
+// import Window from './window.vue';
+// import Dialog from './dialog.vue';
 import AppRun from './Apps/run.vue';
 import AppIE from './Apps/ie.vue';
 import AppNotepad from './Apps/notepad.vue';
@@ -19,8 +19,8 @@ export default {
     name:'Desktop',
     components:{
         Shortcut,
-        Window,
-        Dialog,
+        // Window,
+        // Dialog,
         AppRun,
         AppIE,
         AppNotepad,

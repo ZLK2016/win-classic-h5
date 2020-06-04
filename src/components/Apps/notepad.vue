@@ -3,6 +3,7 @@
         <div class="main">
             <MenuBar :menuitems="menu"></MenuBar>
             <textarea name="txt" wrap="off"></textarea>
+            <StatusBar></StatusBar>
         </div>
     </Window>
 </template>
@@ -10,10 +11,11 @@
 <script>
 import Window from '../window.vue';
 import MenuBar from '../menubar.vue';
+import StatusBar from '../statusbar.vue';
 export default {
     name:'AppNotepad',
     components:{
-        Window, MenuBar,
+        Window, MenuBar,StatusBar,
     },
     data(){
         return {

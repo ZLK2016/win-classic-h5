@@ -1,5 +1,13 @@
 <template>
     <div class="window" :style="position" tabindex="100">
+        <div v-if="enable_size && !maximized" class="resize-left"></div>
+        <div v-if="enable_size && !maximized" class="resize-top"></div>
+        <div v-if="enable_size && !maximized" class="resize-right"></div>
+        <div v-if="enable_size && !maximized" class="resize-bottom"></div>
+        <div v-if="enable_size && !maximized" class="resize-topleft"></div>
+        <div v-if="enable_size && !maximized" class="resize-topright"></div>
+        <div v-if="enable_size && !maximized" class="resize-bottomright"></div>
+        <div v-if="enable_size && !maximized" class="resize-bottomleft"></div>
         <div class="captionbar" 
             @pointerdown.self="mousedown" @pointermove.self="mousemove" @pointerup.self="mouseup"
             @dblclick="togglemax">
@@ -153,4 +161,13 @@ export default {
     .wndbtns{flex:none;display:flex;}
     .btn{width:16px;height:14px;border:2px outset #d4d0c8;background-color:#d4d0c8;display:flex;align-items:center;justify-content:center;}
     .btn:not([disabled]):active{border-style:inset;}
+
+    .resize-left{cursor:ew-resize;position:absolute;left:-2px;top:0;width:2px;bottom:0;}
+    .resize-top{cursor:ns-resize;position:absolute;left:0;top:-2px;right:0;height:2px;}
+    .resize-bottom{cursor:ns-resize;position:absolute;left:0;bottom:-2px;right:0;height:2px;}
+    .resize-right{cursor:ew-resize;position:absolute;right:-2px;width:2px;top:0;bottom:0;}
+    .resize-topleft{cursor:nwse-resize;position:absolute;width:4px;height:4px;left:-2px;top:-2px;}
+    .resize-topright{cursor:nesw-resize;position:absolute;width:4px;height:4px;right:-2px;top:-2px;}
+    .resize-bottomleft{cursor:nesw-resize;position:absolute;width:4px;height:4px;left:-2px;bottom:-2px;}
+    .resize-bottomright{cursor:nwse-resize;position:absolute;width:4px;height:4px;right:-2px;bottom:-2px;}
 </style>

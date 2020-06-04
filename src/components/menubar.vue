@@ -1,6 +1,13 @@
 <template>
         <div class="menu">
-            <MenuItem v-for="item of menu" :key="item.id" :icon="item.icon" :children="item.children" :large="true" @expanded="child_expanded" :horizontal="true" :open_by_click="true">{{item.name}}</MenuItem>
+            <MenuItem v-for="item of menu" :key="item.id" 
+                :icon="item.icon" 
+                :children="item.children" 
+                :large="true" 
+                :horizontal="true" 
+                :open_by_click="true"
+                @expanded="child_expanded"
+            >{{item.name}}</MenuItem>
         </div>
 </template>
 <script>
