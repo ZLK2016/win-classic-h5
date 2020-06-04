@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "test-ci": "echo \"ci run success\""
   },
   "dependencies": {
     "vue": "^2.6.11",
