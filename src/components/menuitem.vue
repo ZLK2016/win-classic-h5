@@ -86,7 +86,8 @@ export default {
                 return;
             }
             this.timeoutid = setTimeout(() => {
-                this.expand();
+                this.self_expanded = true;
+                this.$emit('expanded', this);
             }, 0);
         },
         mouse_leave(){

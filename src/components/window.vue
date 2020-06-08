@@ -1,19 +1,21 @@
 <template>
     <div class="window" :style="position" tabindex="100">
-        <div v-if="enable_size && !maximized" class="resize-left"></div>
-        <div v-if="enable_size && !maximized" class="resize-top"></div>
-        <div v-if="enable_size && !maximized" class="resize-right"></div>
-        <div v-if="enable_size && !maximized" class="resize-bottom"></div>
-        <div v-if="enable_size && !maximized" class="resize-topleft"></div>
-        <div v-if="enable_size && !maximized" class="resize-topright"></div>
-        <div v-if="enable_size && !maximized" class="resize-bottomright"></div>
-        <div v-if="enable_size && !maximized" class="resize-bottomleft"></div>
-        <div class="captionbar" 
-            @pointerdown.self="mousedown" @pointermove.self="mousemove" @pointerup.self="mouseup"
-            @dblclick="togglemax">
+        <Resizer v-if="canresize" position="left" @resize="resize"></Resizer>
+        <Resizer v-if="canresize" position="top" @resize="resize"></Resizer>
+        <Resizer v-if="canresize" position="right" @resize="resize"></Resizer>
+        <Resizer v-if="canresize" position="bottom" @resize="resize"></Resizer>
+        <Resizer v-if="canresize" position="topleft" @resize="resize"></Resizer>
+        <Resizer v-if="canresize" position="topright" @resize="resize"></Resizer>
+        <Resizer v-if="canresize" position="bottomright" @resize="resize"></Resizer>
+        <Resizer v-if="canresize" position="bottomleft" @resize="resize"></Resizer>
+        <div class="captionbar">
             <img class="sysicon" v-if="icon" :src="icon" />
-            <div class="caption">{{caption}}</div>
-            <div class="spacer"></div>
+            <div class="caption" 
+                @pointerdown.self="mousedown" 
+                @pointermove.self="mousemove" 
+                @pointerup.self="mouseup"
+                @dblclick="togglemax"
+            >{{caption}}</div>
             <div class="wndbtns">
                 <div class="btn" v-if="enable_min">
                     <svg width="7" height="9">
@@ -39,7 +41,7 @@
                         <rect x="0" y="0" width="8" height="8" stroke="#808080" fill="transparent"/>
                     </svg>
                 </div>
-                <div class="btn">
+                <div class="btn" @click="close">
                     <svg width="8" height="7">
                         <line x1="0" y1="0" x2="7" y2="6" stroke="black"/>
                         <line x1="7" y1="0" x2="0" y2="6" stroke="black"/>
@@ -57,8 +59,12 @@
 </template>
 
 <script>
+import Resizer from './resizer.vue';
 export default {
     name:'Window',
+    components:{
+        Resizer,
+    },
     props:{
         caption:{
             type:String,
@@ -84,6 +90,7 @@ export default {
     },
     data(){
         return {
+            proc_id:0,
             maximized:false,
 
             winpos:this.initsize,
@@ -106,6 +113,12 @@ export default {
                 width:`${this.winpos.w}px`,
                 height:`${this.winpos.h}px`,
             }
+        },
+        canresize(){
+            return this.enable_size && !this.maximized;
+        },
+        global_proc_id(){
+            return this.$store.state.proc_id_increment;
         }
     },
     methods:{
@@ -140,7 +153,21 @@ export default {
             if (this.enable_size) {
                 this.maximized = !this.maximized;
             }
+        },
+        resize(offset){
+            this.winpos = {
+                x: this.winpos.x + offset.offsetX,
+                y: this.winpos.y + offset.offsetY,
+                w: this.winpos.w + offset.offsetWidth,
+                h: this.winpos.h + offset.offsetHeight,
+            }
+        },
+        close(){
+            this.$store.commit('closeapp', this.proc_id);
         }
+    },
+    created(){
+        this.proc_id = this.global_proc_id;
     }
 }
 </script>
@@ -156,18 +183,9 @@ export default {
     .captionbar{height:18px;display:flex;align-items:center;padding:0 2px 0 0;background:linear-gradient(to right,#808080,#cac8c4);}
     .captionbar>*{margin-left:2px;}
     .sysicon{width:16px;height:16px;}
-    .caption{flex:none;overflow:hidden;white-space:nowrap;color:white;}
+    .caption{flex:auto;overflow:hidden;white-space:nowrap;color:white;}
     .spacer{flex:auto;}
     .wndbtns{flex:none;display:flex;}
     .btn{width:16px;height:14px;border:2px outset #d4d0c8;background-color:#d4d0c8;display:flex;align-items:center;justify-content:center;}
     .btn:not([disabled]):active{border-style:inset;}
-
-    .resize-left{cursor:ew-resize;position:absolute;left:-2px;top:0;width:2px;bottom:0;}
-    .resize-top{cursor:ns-resize;position:absolute;left:0;top:-2px;right:0;height:2px;}
-    .resize-bottom{cursor:ns-resize;position:absolute;left:0;bottom:-2px;right:0;height:2px;}
-    .resize-right{cursor:ew-resize;position:absolute;right:-2px;width:2px;top:0;bottom:0;}
-    .resize-topleft{cursor:nwse-resize;position:absolute;width:4px;height:4px;left:-2px;top:-2px;}
-    .resize-topright{cursor:nesw-resize;position:absolute;width:4px;height:4px;right:-2px;top:-2px;}
-    .resize-bottomleft{cursor:nesw-resize;position:absolute;width:4px;height:4px;left:-2px;bottom:-2px;}
-    .resize-bottomright{cursor:nwse-resize;position:absolute;width:4px;height:4px;right:-2px;bottom:-2px;}
 </style>
